@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "name": "accordion-client-side-solution",
+    "id": "e3b98814-3e4b-4ec3-a054-a6613fec214a",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "zippedPackage": "solution/accordion.sppkg"
+  }
+}
