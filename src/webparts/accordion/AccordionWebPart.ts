@@ -4,9 +4,6 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-webpart-base';
-//import { escape } from '@microsoft/sp-lodash-subset';
-//import * as jQuery from 'jquery';
-//import * as bootstrap from 'bootstrap';
 import { SPComponentLoader } from '@microsoft/sp-loader';
 
 import styles from './Accordion.module.scss';
@@ -25,7 +22,6 @@ import {
 SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
 SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js').then(() => {
   SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js');
-  
 });
 
 export interface ISPLists {
@@ -64,12 +60,6 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   private _renderList(items: ISPList[]): void {
     let html: string = '', count: number = 0;
     items.forEach((item: ISPList) => {
-      /*html += `
-        <ul class="${styles.accordion}">
-            <li class="${styles.listItem}">
-                <span class="ms-font-l">${item.Title}</span>
-            </li>
-        </ul>`;*/
       html += `
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="heading` + count + `">
@@ -112,9 +102,10 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   }
 
   private _getListData(): Promise<ISPLists> {
-    var listName = this.properties.listName;
+    let listName: string = this.properties.listName, webUrl: string = this.properties.webUrl, apiCall: string;
     if(listName) {
-      return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + `/_api/web/lists/GetByTitle('` + listName + `')/Items`, SPHttpClient.configurations.v1)  
+      if(!webUrl) { webUrl = this.context.pageContext.web.absoluteUrl; }
+      return this.context.spHttpClient.get(webUrl + `/_api/web/lists/GetByTitle('` + listName + `')/Items`, SPHttpClient.configurations.v1)  
       .then((response: SPHttpClientResponse) => {   
         return response.json();  
       });
