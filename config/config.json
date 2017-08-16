@@ -6,7 +6,16 @@
       "outputPath": "./dist/accordion.bundle.js"
     }
   ],
-  "externals": {},
+  "externals": {
+    "jquery": {
+      "path": "node_modules/jquery/dist/jquery.min.js",
+      "globalName": "jQuery"
+    },
+    "bootstrap": {
+      "path": "node_modules/bootstrap/dist/jst/bootstrap.min.js",
+      "globalName": "bootstrap"
+    }
+  },
   "localizedResources": {
     "accordionStrings": "webparts/accordion/loc/{locale}.js"
   }

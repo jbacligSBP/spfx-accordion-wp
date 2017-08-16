@@ -1,3 +1,4 @@
 export interface IAccordionWebPartProps {
-  description: string;
+  listName: string;
+  webUrl: string;
 }

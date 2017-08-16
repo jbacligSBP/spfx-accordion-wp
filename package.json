@@ -8,15 +8,19 @@
   "dependencies": {
     "@microsoft/sp-core-library": "~1.1.0",
     "@microsoft/sp-webpart-base": "~1.1.1",
-    "@types/webpack-env": ">=1.12.1 <1.14.0"
+    "@types/bootstrap": "^3.3.35",
+    "@types/webpack-env": ">=1.12.1 <1.14.0",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
   },
   "devDependencies": {
     "@microsoft/sp-build-web": "~1.1.0",
     "@microsoft/sp-module-interfaces": "~1.1.0",
     "@microsoft/sp-webpart-workbench": "~1.1.0",
-    "gulp": "~3.9.1",
     "@types/chai": ">=3.4.34 <3.6.0",
-    "@types/mocha": ">=2.2.33 <2.6.0"
+    "@types/jquery": "^3.2.11",
+    "@types/mocha": ">=2.2.33 <2.6.0",
+    "gulp": "~3.9.1"
   },
   "scripts": {
     "build": "gulp bundle",
