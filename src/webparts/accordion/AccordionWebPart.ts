@@ -4,7 +4,7 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-webpart-base';
-import { escape } from '@microsoft/sp-lodash-subset';
+//import { escape } from '@microsoft/sp-lodash-subset';
 //import * as jQuery from 'jquery';
 //import * as bootstrap from 'bootstrap';
 import { SPComponentLoader } from '@microsoft/sp-loader';
@@ -23,6 +23,10 @@ import {
 } from '@microsoft/sp-core-library';
 
 SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
+SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js').then(() => {
+  SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js');
+  
+});
 
 export interface ISPLists {
   value: ISPList[];
@@ -34,6 +38,8 @@ export interface ISPList {
 }
 
 export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWebPartProps> {
+
+  private id: number;
 
   private _renderListAsync(): void {
     // Local environment
@@ -56,23 +62,52 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   }
 
   private _renderList(items: ISPList[]): void {
-    let html: string = '';
+    let html: string = '', count: number = 0;
     items.forEach((item: ISPList) => {
-      html += `
+      /*html += `
         <ul class="${styles.accordion}">
             <li class="${styles.listItem}">
                 <span class="ms-font-l">${item.Title}</span>
             </li>
-        </ul>`;
+        </ul>`;*/
+      html += `
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="heading` + count + `">
+            <h4 class="panel-title">
+              <a 
+                role="button" 
+                data-toggle="collapse" 
+                data-parent="#accordion` + this.id + `" 
+                href="#collapse` + count + `" 
+                aria-expanded="true" 
+                aria-controls="collapse` + count + `"
+              >
+                ${item.Title}
+              </a>
+            </h4>
+          </div>
+          <div 
+            id="collapse` + count + `" 
+            class="panel-collapse collapse"
+            role="tabpanel"
+            aria-labelledby="heading` + count + `"
+          >
+            <div class="panel-body">
+              ${item.Content}
+            </div>
+          </div>
+        </div>`;
+      count++;
     });
 
-    const listContainer: Element = this.domElement.querySelector('#spListContainer');
+    const listContainer: Element = this.domElement.querySelector('#accordion' + this.id);
     listContainer.innerHTML = html;
   }
 
   private _renderError(error: any): void {
-    let html: string = '<div>List Name is currently empty or the list does not exist.  Please update List Name and/or Web URL (if used) in web part settings.</div>';
-    const listContainer: Element = this.domElement.querySelector('#spListContainer');
+    let html: string = `<div>List Name is currently empty or the list does not exist.  
+      Please update List Name and/or Web URL (if used) in web part settings.</div>`;
+    const listContainer: Element = this.domElement.querySelector('#spErrorContainer');
     listContainer.innerHTML = html;
   }
 
@@ -104,9 +139,10 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   }
 
   public render(): void {
+    this.id = Math.floor(Math.random()*90000) + 10000;
     this.domElement.innerHTML = `
-      <div class="panel-group" id="accordion" role="tablist aria-multiselectable="true">
-        <div id="spListContainer" />
+      <div id="spErrorContainer" />
+      <div class="panel-group" id="accordion` + this.id + `" role="tablist" aria-multiselectable="true">
       </div>`;
       this._renderListAsync();
   }
