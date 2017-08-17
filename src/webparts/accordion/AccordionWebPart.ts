@@ -20,9 +20,10 @@ import {
 } from '@microsoft/sp-core-library';
 
 SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
-SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js').then(() => {
-  SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js');
-});
+SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+  .then(() => {
+    SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js');
+  });
 
 export interface ISPLists {
   value: ISPList[];
@@ -61,10 +62,11 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
     let html: string = '', count: number = 0;
     items.forEach((item: ISPList) => {
       html += `
-        <div class="panel panel-default">
+        <div class="panel panel-default ${styles.panelCustom}">
           <div class="panel-heading" role="tab" id="heading` + count + `">
             <h4 class="panel-title">
               <a 
+                class="${styles.accordionTitle}
                 role="button" 
                 data-toggle="collapse" 
                 data-parent="#accordion` + this.id + `" 
@@ -106,9 +108,9 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
     if(listName) {
       if(!webUrl) { webUrl = this.context.pageContext.web.absoluteUrl; }
       return this.context.spHttpClient.get(webUrl + `/_api/web/lists/GetByTitle('` + listName + `')/Items`, SPHttpClient.configurations.v1)  
-      .then((response: SPHttpClientResponse) => {   
-        return response.json();  
-      });
+        .then((response: SPHttpClientResponse) => {   
+          return response.json();  
+        });
     } else {
       return Promise.reject(new Error('no list name!'));
     }  
@@ -133,7 +135,7 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
     this.id = Math.floor(Math.random()*90000) + 10000;
     this.domElement.innerHTML = `
       <div id="spErrorContainer" />
-      <div class="panel-group" id="accordion` + this.id + `" role="tablist" aria-multiselectable="true">
+      <div class="panel-group ${styles.accordion}" id="accordion` + this.id + `" role="tablist" aria-multiselectable="true">
       </div>`;
       this._renderListAsync();
   }
