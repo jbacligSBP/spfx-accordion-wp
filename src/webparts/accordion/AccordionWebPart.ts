@@ -19,11 +19,14 @@ import {
   EnvironmentType
 } from '@microsoft/sp-core-library';
 
-SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
+//Imports of jQuery and Bootstrap.  If your site already imports these, uncomment during development only and recomment
+//for production.  If your site does not already import these, uncomment for development and production.
+
+/*SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
 SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
   .then(() => {
     SPComponentLoader.loadScript('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js');
-  });
+  });*/
 
 export interface ISPLists {
   value: ISPList[];
@@ -134,7 +137,7 @@ export default class AccordionWebPart extends BaseClientSideWebPart<IAccordionWe
   public render(): void {
     this.id = Math.floor(Math.random()*90000) + 10000;
     this.domElement.innerHTML = `
-      <div id="spErrorContainer" />
+      <div id="spErrorContainer"></div>
       <div class="panel-group ${styles.accordion}" id="accordion` + this.id + `" role="tablist" aria-multiselectable="true">
       </div>`;
       this._renderListAsync();
