@@ -19,7 +19,7 @@ import {
   EnvironmentType
 } from '@microsoft/sp-core-library';
 
-//Imports of jQuery and Bootstrap.  If your site already imports these, uncomment during development only and recomment
+//Loaders for jQuery and Bootstrap.  If your site already loads these, uncomment during development only and recomment
 //for production.  If your site does not already import these, uncomment for development and production.
 
 /*SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');

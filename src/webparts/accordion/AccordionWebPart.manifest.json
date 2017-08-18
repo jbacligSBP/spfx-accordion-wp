@@ -15,7 +15,7 @@
 
   "preconfiguredEntries": [{
     "groupId": "4e9cf132-025f-4ed5-9d22-91f68eb95546",
-    "group": { "default": "Under Development" },
+    "group": { "default": "Custom" },
     "title": { "default": "Accordion" },
     "description": { "default": "Accordion description" },
     "officeFabricIconFontName": "Page",
